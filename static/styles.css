@@ -1,0 +1,30 @@
+.active {
+  stroke: #000;
+  stroke-width: 2px;
+}
+
+.flagged {
+  fill: red;
+  stroke: #000;
+  stroke-width: 1px;
+}
+
+.svg_background {
+  background-color: rgb(254, 254, 254);
+}
+
+.fl {
+  fill: green;
+}
+
+.cl {
+  fill: red;
+}
+
+.ob {
+  fill: orange;
+}
+
+.fg {
+  fill: yellow;
+}

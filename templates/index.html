@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <meta http-equiv="U-XA-Compatible" content="IE-Edge"/>
+  <link href="{{ url_for('static', filename='bootstrap.min.css') }}" rel="stylesheet"/>
+  <link href="{{ url_for('static', filename='styles.css') }}" rel="stylesheet"/>
+  <title>Stage Planner v.1</title>
+</head>
+<body>
+  <div class="container" id="main_container">
+    <h2 class="text-center">Stage Planner v.1</h2>
+
+
+<form>
+    <div class="row justify-content-center">
+      <div class="col-2">
+        <input type="text" class="form-control" id="vn1" placeholder="VN I" onkeyup="createLayout(this.id)">
+      </div>
+      <div class="col-2">
+        <input type="text" class="form-control" id="vn2" placeholder="VN II" onkeyup="createLayout(this.id)">
+      </div>
+      <div class="col-2">
+        <input type="text" class="form-control" id="vla" placeholder="VLA" onkeyup="createLayout(this.id)">
+      </div>
+      <div class="col-2">
+        <input type="text" class="form-control" id="vc" placeholder="VC" onkeyup="createLayout(this.id)">
+      </div>
+      <div class="col-2">
+        <input type="text" class="form-control" id="cb" placeholder="CB" onkeyup="createLayout(this.id)">
+      </div>
+      <div class="col-2">
+        <input type="text" class="form-control" id="fl" placeholder="FL" onkeyup="wind(this.id)">
+      </div>
+      <div class="col-2">
+        <input type="text" class="form-control" id="ob" placeholder="OB" onkeyup="wind(this.id)">
+      </div>
+      <div class="col-2">
+        <input type="text" class="form-control" id="cl" placeholder="CL" onkeyup="wind(this.id)">
+      </div>
+      <div class="col-2">
+        <input type="text" class="form-control" id="fg" placeholder="FG" onkeyup="wind(this.id)">
+      </div>
+      <div class="col-2">
+        <input type="text" class="form-control" id="cr" placeholder="CR" onkeyup="wind(this.id)">
+      </div>
+      <div class="col-2">
+        <input type="text" class="form-control" id="tr" placeholder="TR" onkeyup="wind(this.id)">
+      </div>
+      <div class="col-2">
+        <input type="text" class="form-control" id="tbn" placeholder="TBN" onkeyup="wind(this.id)">
+      </div>
+      <div class="col-2">
+        <input type="text" class="form-control" id="tb" placeholder="TB" onkeyup="wind(this.id)">
+      </div>
+      <div class="col-2">
+        <label class="custom-control custom-checkbox">
+          <input type="checkbox" class="custom-control-input" id="three_rows">
+          <span class="custom-control-indicator"></span>
+          <span class="custom-control-description">Trzy rzedy</span>
+        </label>
+      </div>
+</div>
+</form>
+
+    <div class="row justify-content-center">
+      <div class="col" id="stage_view"></div>
+    </div>
+    <p class="text-center" id="color_info">lorem ipsum</p>
+  </div>
+
+  <script src="{{ url_for('static', filename='jquery-3.2.1.min.js') }}"  type="text/javascript"></script>
+  <script src="{{ url_for('static', filename='bootstrap.min.js') }}" type="text/javascript"></script>
+  <script src="{{ url_for('static', filename='d3.min.js') }}" type="text/javascript"></script>
+  {{ JSGlue.include() }}
+  <script src="{{url_for('static', filename='script.js') }}" type="text/javascript"></script>
+</body>
+</html>
