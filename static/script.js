@@ -1,4 +1,16 @@
-
+var first_row_parameters = {name: "first_row"};
+var first_row_data = [];
+var second_row_parameters = {name: "second_row"};
+var second_row_data = [];
+$.getJSON(Flask.url_for("instrument"), first_row_parameters)
+ .done(function(data, textStatus, jqXHR) {
+                first_row_data = data
+                console.log(textStatus)
+                });
+$.getJSON(Flask.url_for("instrument"), second_row_parameters)
+.done(function(data, textStatus, jqXHR) {
+               second_row_data = data
+               });
 
 var radius = 15;
 
@@ -12,7 +24,7 @@ var svgContainer = d3.select("#stage_view")
                              .attr("class", "svg_background");
 
 var circleClickedGroup = svgContainer.append("g").attr("class", "clicked");
-var circleAutoCreatedGroup = svgContainer.append("g");
+
 var linearScaleX = d3.scaleLinear()
                           .domain([0, 100])
                           .range([0, width]);
@@ -125,19 +137,25 @@ function createLayout(id)
          curr_data.push(newData);
        }
 
-       var class_name = "circle." + id;
-       var selector = "g." + id;
-       svgContainer.selectAll(selector).remove();
-       circle_group = svgContainer.append("g").attr("class", id);
-       circle_group.selectAll("circle")
-                  .data(curr_data)
-                  .enter()
-                  .append("circle")
-                  .attr("cx", function(d){return d.x;})
-                  .attr("cy", function(d){return d.y;})
-                  .attr("r", radius)
-                  .attr("class", id)
-                  .style("fill", function() {return "hsl(" + Math.random() * 360 + ",100%,50%)";});
+       svgContainer.selectAll("g." + id).remove();
+
+       circle_group = svgContainer.selectAll("g."+id)
+                                  .data(curr_data)
+                                  .enter()
+                                  .append("g")
+                                  .attr("transform", function(d) {return "translate(" + d.x + "," + d.y + ")"})
+                                  .classed(id, true);
+
+       circle_group.append("circle")
+                   .attr("r", radius)
+                   .attr("class", id+"_circle")
+
+       circle_group.append("text")
+                   .text(id)
+                   .classed("instrument_name", true)
+                   .attr("text-anchor", "middle")
+                   .attr("dominant-baseline", "central");
+
         curr_data.length = 0;
     }
     else
@@ -154,61 +172,75 @@ function createLayout(id)
 function wind(id)
 {
 
-
-  var parameters2 = {
-    name: "first_row"
-  }
-  var first_row_data = [];
-
-  $.getJSON(Flask.url_for("instrument"), parameters2)
-  .done(function(data, textStatus, jqXHR){
-
-    first_row_data = data;
-    var fl = {ilosc: $("#fl").val().length > 0 ?  parseInt($("#fl").val(), 10) : 0, id: "fl"};
-    var cl = {ilosc: $("#cl").val().length > 0 ?  parseInt($("#cl").val(), 10) : 0, id: "cl"};
-    var ob = {ilosc: $("#ob").val().length > 0 ?  parseInt($("#ob").val(), 10) : 0, id: "ob"};
-    var fg = {ilosc: $("#fg").val().length > 0 ?  parseInt($("#fg").val(), 10) : 0, id: "fg"};
+    var fl = {ilosc: $("#fl").val().length > 0 ?  parseInt($("#fl").val(), 10) : 0, id: "fl", row: "first"};
+    var cl = {ilosc: $("#cl").val().length > 0 ?  parseInt($("#cl").val(), 10) : 0, id: "cl", row: "second"};
+    var ob = {ilosc: $("#ob").val().length > 0 ?  parseInt($("#ob").val(), 10) : 0, id: "ob", row: "first"};
+    var fg = {ilosc: $("#fg").val().length > 0 ?  parseInt($("#fg").val(), 10) : 0, id: "fg", row: "second"};
     var cr = {ilosc: $("#cr").val().length > 0 ?  parseInt($("#cr").val(), 10) : 0, id: "cr"};
-    var tr = {ilosc: $("#tr").val().length > 0 ?  parseInt($("#tr").val(), 10) : 0, id: "tr"};
-    var tbn = {ilosc: $("#tbn").val().length > 0 ?  parseInt($("#tbn").val(), 10) : 0, id: "tbn"};
-    var tb = {ilosc: $("#tb").val().length > 0 ?  parseInt($("#tb").val(), 10) : 0, id: "tb"};
+    var tr = {ilosc: $("#tr").val().length > 0 ?  parseInt($("#tr").val(), 10) : 0, id: "tr", row: "first"};
+    var tbn = {ilosc: $("#tbn").val().length > 0 ?  parseInt($("#tbn").val(), 10) : 0, id: "tbn", row: "second"};
+    var tb = {ilosc: $("#tb").val().length > 0 ?  parseInt($("#tb").val(), 10) : 0, id: "tb", row: "second"};
 
-
-    var instruments_container = [];
     var data = [];
-    var counter = 0;
-    instruments_container.push(fl, cl, ob, fg);
+    var first_row_counter = 0;
+    var second_row_counter = 0;
 
+    var rows = [];
+    var first_row = [];
+    var second_row = [];
+    first_row.push(fl, ob, tr);
+    second_row.push(cl, fg, tbn, tb);
+    rows.push(first_row, second_row);
 
-      for (instrument in instruments_container) {
-        for(var i = 0; i < instruments_container[instrument]["ilosc"]; i++) {
+    for(row in rows) {
+        var instruments = rows[row];
 
-          var curr_instrument = {
-            x: linearScaleX(first_row_data[counter][0]),
-            y: linearScaleY(first_row_data[counter][1]),
-            id: instruments_container[instrument]["id"]
-          };
-          data.push(curr_instrument);
-          counter++;
+        for(instrument in instruments) {
+
+          for(var i = 0; i < instruments[instrument]["ilosc"]; i++) {
+
+            if(instruments[instrument]["row"] === "first"){
+              var curr_instrument = {
+                x: linearScaleX(first_row_data[first_row_counter][0]),
+                y: linearScaleY(first_row_data[first_row_counter][1]),
+                id: instruments[instrument]["id"]
+              };
+              data.push(curr_instrument);
+              first_row_counter++;
+            }
+            else if(instruments[instrument]["row"] === "second"){
+
+              var curr_instrument = {
+                x: linearScaleX(second_row_data[second_row_counter][0]),
+                y: linearScaleY(second_row_data[second_row_counter][1]),
+                id: instruments[instrument]["id"]
+              };
+              data.push(curr_instrument);
+              second_row_counter++;
+
+            }
+
+          }
+
         }
-
-      }
+    }
 
       svgContainer.selectAll("g.first_row").remove();
-      var first_row_group = svgContainer.append("g").attr("class", "first_row");
-      first_row_group.selectAll("circle")
-                     .data(data)
-                     .enter()
-                     .append("circle")
-                     .attr("cx", function(d) {return d.x;})
-                     .attr("cy", function(d) {return d.y;})
+
+      var first_row_group = svgContainer.selectAll("g.first_row")
+                                        .data(data)
+                                        .enter()
+                                        .append("g")
+                                        .attr("transform", function(d) {return "translate(" + d.x + "," + d.y + ")"})
+                                        .classed("first_row", true);
+      first_row_group.append("circle")
                      .attr("r", radius)
                      .attr("class", function(d) {return d.id;});
 
-      for(var i = 0; i < data.length; i++) {
-        console.log(data[i]["id"] + ": x: " + data[i]["x"] + " y: " + data[i]["y"]);
-      }
-
-    });
+      first_row_group.append("text")
+                     .text(function(d) {return d.id})
+                     .attr("text-anchor", "middle")
+                     .attr("dominant-baseline", "central")
+                     .classed("instrument_name", true);
 
 }

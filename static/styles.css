@@ -14,17 +14,55 @@
 }
 
 .fl {
-  fill: green;
+  fill: #1F9C8B
 }
 
 .cl {
-  fill: red;
+  fill: #76BF72;
 }
 
 .ob {
-  fill: orange;
+  fill: #FFDF4F;
 }
 
 .fg {
-  fill: yellow;
+  fill: #E8501F;
+}
+
+.instrument_name {
+  font-family: "Trebuchet MS", Verada, sans-serif;
+  font-size: 12px;
+}
+
+.tr {
+  fill: #BEEB9F;
+}
+
+.tbn {
+  fill: #79BD8F;
+}
+
+.tb {
+  fill: #00A388;
+}
+
+
+.vn1_circle {
+  fill: #A55C55;
+}
+
+.vn2_circle {
+  fill: #DBA67B;
+}
+
+.vla_circle {
+  fill: #D7D6A5;
+}
+
+.vc_circle {
+  fill: #458985;
+}
+
+.cb_circle {
+  fill: #074358;
 }
