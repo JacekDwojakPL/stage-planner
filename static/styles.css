@@ -66,3 +66,8 @@
 .cb_circle {
   fill: #074358;
 }
+
+circle:hover {
+  fill: red;
+  cursor: pointer;
+}

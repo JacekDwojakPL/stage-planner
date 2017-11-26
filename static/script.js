@@ -2,6 +2,7 @@ var first_row_parameters = {name: "first_row"};
 var first_row_data = [];
 var second_row_parameters = {name: "second_row"};
 var second_row_data = [];
+
 $.getJSON(Flask.url_for("instrument"), first_row_parameters)
  .done(function(data, textStatus, jqXHR) {
                 first_row_data = data
@@ -13,7 +14,6 @@ $.getJSON(Flask.url_for("instrument"), second_row_parameters)
                });
 
 var radius = 15;
-
 var width = $("#main_container").width();
 var height = window.innerHeight - 15;
 
@@ -23,7 +23,7 @@ var svgContainer = d3.select("#stage_view")
                              .attr("height", 600)
                              .attr("class", "svg_background");
 
-var circleClickedGroup = svgContainer.append("g").attr("class", "clicked");
+
 
 var linearScaleX = d3.scaleLinear()
                           .domain([0, 100])
@@ -37,6 +37,9 @@ var y_axis = d3.axisRight().scale(linearScaleY);
 svgContainer.append("g").call(x_axis);
 svgContainer.append("g").call(y_axis);
 
+var circleClickedGroup = svgContainer.append("g")
+                                     .classed("clicked", true);
+
 // container for getting x and y coordinates of click event
 var data = [];
 svgContainer.on("click", function() {
@@ -48,63 +51,24 @@ svgContainer.on("click", function() {
   data.push(newData);
 
 // creating new circle on click
-  circleClickedGroup.selectAll("circle")
-              .data(data)
-              .enter()
-              .append("circle")
-              .attr("cx", function(d){return d.x;})
-              .attr("cy", function(d){return d.y;})
-              .attr("r", radius)
-              .attr("class", "unflagged")
-              .style("fill", function() {return "hsl(" + Math.random() * 360 + ",100%,50%)";})
-              .style("cursor", "pointer")
-              .on("click", function() {
-                                        d3.event.stopPropagation();
-                                        var state = d3.select(this).attr("class");
-                                        var x_position = d3.select(this).attr("cx");
-                                        var y_position = d3.select(this).attr("cy");
-                                        var localScaleX = d3.scaleLinear().domain([0, width]).range([0, 100]);
-                                        var localScaleY = d3.scaleLinear().domain([0, 600]).range([0, 100])
-                                        console.log("x position: " + localScaleX(x_position));
-                                        console.log("y position: " + localScaleY(y_position));
 
+var clickedNode = circleClickedGroup.data(data)
+                                    .append("g")
+                                    .attr("transform", function(d) {return "translate(" + [ d.x,d.y ] + ")"})
+                                    .call(dragged);
+clickedNode.append("circle")
+           .attr("r", radius)
+           .style("fill", "red");
 
-                                          if(state == "unflagged")
-                                          {
-                                            d3.select(this).raise().classed("flagged", true);
-                                            d3.select(this).raise().classed("unflagged", false);
-                                          }
-                                          else
-                                          {
-                                            d3.select(this).raise().classed("flagged", false);
-                                            d3.select(this).raise().classed("unflagged", true);
-                                          }
-                                        })
-              .call(d3.drag()
-                      .on("start", drag_start)
-                      .on("drag", drag_move)
-                      .on("end", drag_end));
+clickedNode.append("text")
+           .text("test")
+           .attr("text-anchor", "middle")
+           .attr("dominant-baseline", "central")
+           .classed("instrument_name", true);
 
-    console.log(newData);
+data.length = 0;
 
 })
-
-
-// definig drag events
-function drag_start(d) {
-  d3.select(this).raise().classed("active", true);
-}
-
-function drag_move(d) {
-  d3.select(this)
-      .attr("cx", d.x = d3.event.x)
-      .attr("cy", d.y = d3.event.y);
-}
-
-function drag_end(d) {
-  d3.select(this).raise().classed("active", false);
-}
-
 
 // example data for fake first violin position
 
@@ -120,7 +84,6 @@ function createLayout(id)
    {
 
      instrument_global = data;
-
 
      var curr_data = [];
      var selector = "#" + id;
@@ -144,7 +107,9 @@ function createLayout(id)
                                   .enter()
                                   .append("g")
                                   .attr("transform", function(d) {return "translate(" + d.x + "," + d.y + ")"})
-                                  .classed(id, true);
+                                  .classed(id, true)
+                                  .call(dragged);
+
 
        circle_group.append("circle")
                    .attr("r", radius)
@@ -165,9 +130,6 @@ function createLayout(id)
 
   });
 }
-
-
-
 
 function wind(id)
 {
@@ -232,7 +194,8 @@ function wind(id)
                                         .enter()
                                         .append("g")
                                         .attr("transform", function(d) {return "translate(" + d.x + "," + d.y + ")"})
-                                        .classed("first_row", true);
+                                        .classed("first_row", true)
+                                        .call(dragged);
       first_row_group.append("circle")
                      .attr("r", radius)
                      .attr("class", function(d) {return d.id;});
@@ -242,5 +205,15 @@ function wind(id)
                      .attr("text-anchor", "middle")
                      .attr("dominant-baseline", "central")
                      .classed("instrument_name", true);
-
 }
+
+// definig drag behavior
+
+var dragged = d3.drag()
+                .on("drag", function(d, i) {
+                      d.x += d3.event.dx
+                      d.y += d3.event.dy
+                      d3.select(this).attr("transform", function(d, i) {
+                        return "translate(" + [ d.x, d.y ] + ")"
+                      })
+                    });
