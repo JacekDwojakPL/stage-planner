@@ -10,64 +10,53 @@
 </head>
 <body>
   <div class="container" id="main_container">
-    <h2 class="text-center">Stage Planner v.1</h2>
+    <header class="text-center">
+      <h2>Stage Planner v.1</h2>
+    </header>
 
+<div class="row">
+    <div class="col-1">
+      <button class="btn btn-default" type="button" data-toggle="collapse" data-target="#string_collapse" aria-expanded="false" aria-controls="string_collapse">
+        String
+      </button>
+      <div class="collapse" id="string_collapse">
+        <form>
+          <input type="text" class="form-control" id="vn1" placeholder="VN I" onkeyup="createLayout(this.id)">
+          <input type="text" class="form-control" id="vn2" placeholder="VN II" onkeyup="createLayout(this.id)">
+          <input type="text" class="form-control" id="vla" placeholder="VLA" onkeyup="createLayout(this.id)">
+          <input type="text" class="form-control" id="vc" placeholder="VC" onkeyup="createLayout(this.id)">
+          <input type="text" class="form-control" id="cb" placeholder="CB" onkeyup="createLayout(this.id)">
+        </form>
+      </div>
 
-<form>
-    <div class="row justify-content-center">
-      <div class="col-2">
-        <input type="text" class="form-control" id="vn1" placeholder="VN I" onkeyup="createLayout(this.id)">
+      <button class="btn btn-default" type="button" data-toggle="collapse" data-target="#wood_collapse" aria-expanded="false" aria-controls="wood_collapse">
+        Wood
+      </button>
+      <div class="collapse" id="wood_collapse">
+        <form>
+          <input type="text" class="form-control" id="fl" placeholder="FL" onkeyup="wind(this.id)">
+          <input type="text" class="form-control" id="ob" placeholder="OB" onkeyup="wind(this.id)">
+          <input type="text" class="form-control" id="cl" placeholder="CL" onkeyup="wind(this.id)">
+          <input type="text" class="form-control" id="fg" placeholder="FG" onkeyup="wind(this.id)">
+        </form>
       </div>
-      <div class="col-2">
-        <input type="text" class="form-control" id="vn2" placeholder="VN II" onkeyup="createLayout(this.id)">
-      </div>
-      <div class="col-2">
-        <input type="text" class="form-control" id="vla" placeholder="VLA" onkeyup="createLayout(this.id)">
-      </div>
-      <div class="col-2">
-        <input type="text" class="form-control" id="vc" placeholder="VC" onkeyup="createLayout(this.id)">
-      </div>
-      <div class="col-2">
-        <input type="text" class="form-control" id="cb" placeholder="CB" onkeyup="createLayout(this.id)">
-      </div>
-      <div class="col-2">
-        <input type="text" class="form-control" id="fl" placeholder="FL" onkeyup="wind(this.id)">
-      </div>
-      <div class="col-2">
-        <input type="text" class="form-control" id="ob" placeholder="OB" onkeyup="wind(this.id)">
-      </div>
-      <div class="col-2">
-        <input type="text" class="form-control" id="cl" placeholder="CL" onkeyup="wind(this.id)">
-      </div>
-      <div class="col-2">
-        <input type="text" class="form-control" id="fg" placeholder="FG" onkeyup="wind(this.id)">
-      </div>
-      <div class="col-2">
-        <input type="text" class="form-control" id="cr" placeholder="CR" onkeyup="wind(this.id)">
-      </div>
-      <div class="col-2">
-        <input type="text" class="form-control" id="tr" placeholder="TR" onkeyup="wind(this.id)">
-      </div>
-      <div class="col-2">
-        <input type="text" class="form-control" id="tbn" placeholder="TBN" onkeyup="wind(this.id)">
-      </div>
-      <div class="col-2">
-        <input type="text" class="form-control" id="tb" placeholder="TB" onkeyup="wind(this.id)">
-      </div>
-      <div class="col-2">
-        <label class="custom-control custom-checkbox">
-          <input type="checkbox" class="custom-control-input" id="three_rows">
-          <span class="custom-control-indicator"></span>
-          <span class="custom-control-description">Trzy rzedy</span>
-        </label>
-      </div>
-</div>
-</form>
 
-    <div class="row justify-content-center">
-      <div class="col" id="stage_view"></div>
+      <button class="btn btn-default" type="button" data-toggle="collapse" data-target="#brass_collapse" aria-expanded="false" aria-controls="brass_collapse">
+        Brass
+      </button>
+      <div class="collapse" id="brass_collapse">
+        <form>
+          <input type="text" class="form-control" id="cr" placeholder="CR" onkeyup="wind(this.id)">
+          <input type="text" class="form-control" id="tr" placeholder="TR" onkeyup="wind(this.id)">
+          <input type="text" class="form-control" id="tbn" placeholder="TBN" onkeyup="wind(this.id)">
+          <input type="text" class="form-control" id="tb" placeholder="TB" onkeyup="wind(this.id)">
+        </form>
+      </div>
+
     </div>
-    <p class="text-center" id="color_info">lorem ipsum</p>
+    <div class="col-11" id="stage_view"></div>
+  </div>
+
   </div>
 
   <script src="{{ url_for('static', filename='jquery-3.2.1.min.js') }}"  type="text/javascript"></script>
