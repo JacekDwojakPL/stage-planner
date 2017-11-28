@@ -108,8 +108,8 @@ function createLayout(id)
                                   .append("g")
                                   .attr("transform", function(d) {return "translate(" + d.x + "," + d.y + ")"})
                                   .classed(id, true)
-                                  .call(dragged);
-
+                                  .call(dragged)
+                                  .on("click", function () {d3.event.stopPropagation()});
 
        circle_group.append("circle")
                    .attr("r", radius)
@@ -217,3 +217,9 @@ var dragged = d3.drag()
                         return "translate(" + [ d.x, d.y ] + ")"
                       })
                     });
+
+
+function display_text(node)
+{
+  console.log(node);
+}
