@@ -13,14 +13,14 @@ $.getJSON(Flask.url_for("instrument"), second_row_parameters)
                second_row_data = data
                });
 
-var radius = 15;
-var width = $("#main_container").width();
-var height = window.innerHeight - 15;
+var radius = 18;
+var width = 1280;
+var height = 720;
 
 var svgContainer = d3.select("#stage_view")
                              .append("svg")
                              .attr("width", width)
-                             .attr("height", 600)
+                             .attr("height", height)
                              .attr("class", "svg_background");
 
 
@@ -30,7 +30,7 @@ var linearScaleX = d3.scaleLinear()
                           .range([0, width]);
 var linearScaleY = d3.scaleLinear()
                           .domain([0,100])
-                          .range([0, 600]);
+                          .range([0, height]);
 
 var x_axis = d3.axisBottom().scale(linearScaleX);
 var y_axis = d3.axisRight().scale(linearScaleY);
@@ -143,6 +143,19 @@ function wind(id)
     var tbn = {ilosc: $("#tbn").val().length > 0 ?  parseInt($("#tbn").val(), 10) : 0, id: "tbn", row: "second"};
     var tb = {ilosc: $("#tb").val().length > 0 ?  parseInt($("#tb").val(), 10) : 0, id: "tb", row: "second"};
 
+    var cr_first = {ilosc: 0, id: "cr", row: "first"};
+    var cr_second = {ilosc: 0, id: "cr", row: "second"};
+
+    if(cr.ilosc <= 2) {
+      cr_first.ilosc = cr.ilosc;
+    }
+    else if(cr.ilosc > 2) {
+      cr_first.ilosc = 2;
+      cr.ilosc -= 2;
+      cr_second.ilosc =  cr.ilosc;
+    }
+
+
     var data = [];
     var first_row_counter = 0;
     var second_row_counter = 0;
@@ -150,8 +163,8 @@ function wind(id)
     var rows = [];
     var first_row = [];
     var second_row = [];
-    first_row.push(fl, ob, tr);
-    second_row.push(cl, fg, tbn, tb);
+    first_row.push(cr_first, fl, ob, tr);
+    second_row.push(cr_second, cl, fg, tbn, tb);
     rows.push(first_row, second_row);
 
     for(row in rows) {
@@ -219,7 +232,18 @@ var dragged = d3.drag()
                     });
 
 
-function display_text(node)
-{
-  console.log(node);
+function export_pdf() {
+  var graph = $("svg");
+  var serializer = new XMLSerializer();
+  var svg = graph;
+  var output;
+  var url = Flask.url_for("export");
+  console.log(url);
+  output = serializer.serializeToString(svg);
+
+  $.POST("/export", {"new_data": output})
 }
+
+$("#button2").click(function () {
+  $.post("/export", {data:"hello"});
+});

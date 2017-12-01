@@ -19,3 +19,9 @@ def instrument():
     db.execute(query)
     rows = db.fetchall()
     return(jsonify(rows))
+
+@app.route("/export", methods=['POST'])
+def pdf_export():
+    data = request.form('data')
+    print(data)
+    return "succes"
