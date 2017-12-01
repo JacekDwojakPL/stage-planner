@@ -232,18 +232,13 @@ var dragged = d3.drag()
                     });
 
 
-function export_pdf() {
+$("#export_button").click(function () {
   var graph = $("svg");
   var serializer = new XMLSerializer();
-  var svg = graph;
+  var svg = graph[0];
   var output;
-  var url = Flask.url_for("export");
-  console.log(url);
   output = serializer.serializeToString(svg);
+  console.log(output)
 
-  $.POST("/export", {"new_data": output})
-}
-
-$("#button2").click(function () {
-  $.post("/export", {data:"hello"});
+  $.post("/export", {new_data: output})
 });

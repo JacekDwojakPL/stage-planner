@@ -22,6 +22,6 @@ def instrument():
 
 @app.route("/export", methods=['POST'])
 def pdf_export():
-    data = request.form('data')
-    print(data)
+    data = request.form["new_data"]
+    print(str(data))
     return "succes"
