@@ -183,63 +183,6 @@ a.article, a.article:hover {
   background-color: rgb(254, 254, 254);
 }
 
-.fl {
-  fill: #96526B;
-}
-
-.cl {
-  fill: #D17869;
-}
-
-.ob {
-  fill: #EBAD60;
-}
-
-.fg {
-  fill: #F5CF66;
-}
-
-.instrument_name {
-  font-family: "Trebuchet MS", Verada, sans-serif;
-  font-size: 12px;
-}
-
-.cr {
-  fill: #8BAB8D;
-}
-.tr {
-  fill: #FFD34E;
-}
-
-.tbn {
-  fill: #DB9E36;
-}
-
-.tb {
-  fill: #BD4932;
-}
-
-
-.vn1_circle {
-  fill: #A55C55;
-}
-
-.vn2_circle {
-  fill: #DBA67B;
-}
-
-.vla_circle {
-  fill: #D7D6A5;
-}
-
-.vc_circle {
-  fill: #458985;
-}
-
-.cb_circle {
-  fill: #074358;
-}
-
 circle:hover {
   fill: red;
   cursor: pointer;

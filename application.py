@@ -1,6 +1,9 @@
-from flask import Flask, request, jsonify, render_template, url_for
+from flask import Flask, request, jsonify, render_template, url_for, send_file
 from flask_jsglue import JSGlue
 import sqlite3
+import pdfkit
+import html
+from io import BytesIO
 
 app = Flask(__name__)
 JSGlue(app)
@@ -21,7 +24,12 @@ def instrument():
     return(jsonify(rows))
 
 @app.route("/export", methods=['POST'])
-def pdf_export():
-    data = request.form["new_data"]
-    print(str(data))
-    return "succes"
+def export_pdf():
+    if request.method == 'POST':
+        pdf_string = request.form["output_data"]
+        encoded = html.unescape(pdf_string)
+        options = {"orientation": "landscape"}
+        pdf = pdfkit.from_string(pdf_string, False, options=options)
+        pdf_out = BytesIO(pdf)
+
+        return send_file(pdf_out, "output.pdf")

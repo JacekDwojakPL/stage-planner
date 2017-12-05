@@ -48,6 +48,10 @@
   <div id="stage_view"></div>
 </div>
 
+<form id="svg_form" method="post" action="{{ url_for('export_pdf') }}">
+  <input type="hidden" id="output_data" name="output_data" value="">
+</form>
+
 <script src="{{ url_for('static', filename='jquery-3.2.1.min.js') }}"  type="text/javascript"></script>
 <script src="{{ url_for('static', filename='bootstrap.min.js') }}" type="text/javascript"></script>
 <script src="{{ url_for('static', filename='d3.min.js') }}" type="text/javascript"></script>

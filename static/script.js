@@ -64,6 +64,8 @@ clickedNode.append("text")
            .text("test")
            .attr("text-anchor", "middle")
            .attr("dominant-baseline", "central")
+           .attr("font-family", "\"Trebuchet MS\", Verada, sans-serif")
+           .attr("font-size", "12px")
            .classed("instrument_name", true);
 
 data.length = 0;
@@ -95,7 +97,8 @@ function createLayout(id)
        {
          var newData = {
                         x: linearScaleX(instrument_global[i][0]),
-                        y: linearScaleY(instrument_global[i][1])
+                        y: linearScaleY(instrument_global[i][1]),
+                        fill: instrument_global[i][2]
                         };
          curr_data.push(newData);
        }
@@ -114,12 +117,17 @@ function createLayout(id)
        circle_group.append("circle")
                    .attr("r", radius)
                    .attr("class", id+"_circle")
+                   .style("fill", function(d) {return d.fill; })
+                   .on("mouseover", function() {d3.select(this).style("fill", "red")})
+                   .on("mouseout", function() {d3.select(this).style("fill", function(d) {return d.fill;})});;
 
        circle_group.append("text")
                    .text(id)
                    .classed("instrument_name", true)
                    .attr("text-anchor", "middle")
-                   .attr("dominant-baseline", "central");
+                   .attr("dominant-baseline", "central")
+                   .attr("font-family", "\"Trebuchet MS\", Verada, sans-serif")
+                   .attr("font-size", "12px");
 
         curr_data.length = 0;
     }
@@ -134,17 +142,17 @@ function createLayout(id)
 function wind(id)
 {
 
-    var fl = {ilosc: $("#fl").val().length > 0 ?  parseInt($("#fl").val(), 10) : 0, id: "fl", row: "first"};
-    var cl = {ilosc: $("#cl").val().length > 0 ?  parseInt($("#cl").val(), 10) : 0, id: "cl", row: "second"};
-    var ob = {ilosc: $("#ob").val().length > 0 ?  parseInt($("#ob").val(), 10) : 0, id: "ob", row: "first"};
-    var fg = {ilosc: $("#fg").val().length > 0 ?  parseInt($("#fg").val(), 10) : 0, id: "fg", row: "second"};
-    var cr = {ilosc: $("#cr").val().length > 0 ?  parseInt($("#cr").val(), 10) : 0, id: "cr"};
-    var tr = {ilosc: $("#tr").val().length > 0 ?  parseInt($("#tr").val(), 10) : 0, id: "tr", row: "first"};
-    var tbn = {ilosc: $("#tbn").val().length > 0 ?  parseInt($("#tbn").val(), 10) : 0, id: "tbn", row: "second"};
-    var tb = {ilosc: $("#tb").val().length > 0 ?  parseInt($("#tb").val(), 10) : 0, id: "tb", row: "second"};
+    var fl = {ilosc: $("#fl").val().length > 0 ?  parseInt($("#fl").val(), 10) : 0, id: "fl", row: "first", fill: "#96526B"};
+    var cl = {ilosc: $("#cl").val().length > 0 ?  parseInt($("#cl").val(), 10) : 0, id: "cl", row: "second", fill: "#D17869"};
+    var ob = {ilosc: $("#ob").val().length > 0 ?  parseInt($("#ob").val(), 10) : 0, id: "ob", row: "first", fill: "#EBAD60"};
+    var fg = {ilosc: $("#fg").val().length > 0 ?  parseInt($("#fg").val(), 10) : 0, id: "fg", row: "second", fill: "#F5CF66"};
+    var cr = {ilosc: $("#cr").val().length > 0 ?  parseInt($("#cr").val(), 10) : 0, id: "cr", fill: "#8BAB8D"};
+    var tr = {ilosc: $("#tr").val().length > 0 ?  parseInt($("#tr").val(), 10) : 0, id: "tr", row: "first", fill: "#FFD34E"};
+    var tbn = {ilosc: $("#tbn").val().length > 0 ?  parseInt($("#tbn").val(), 10) : 0, id: "tbn", row: "second", fill: "#DB9E36"};
+    var tb = {ilosc: $("#tb").val().length > 0 ?  parseInt($("#tb").val(), 10) : 0, id: "tb", row: "second", fill: "#BD4932"};
 
-    var cr_first = {ilosc: 0, id: "cr", row: "first"};
-    var cr_second = {ilosc: 0, id: "cr", row: "second"};
+    var cr_first = {ilosc: 0, id: "cr", row: "first", fill: "#8BAB8D"};
+    var cr_second = {ilosc: 0, id: "cr", row: "second", fill: "#8BAB8D"};
 
     if(cr.ilosc <= 2) {
       cr_first.ilosc = cr.ilosc;
@@ -178,7 +186,8 @@ function wind(id)
               var curr_instrument = {
                 x: linearScaleX(first_row_data[first_row_counter][0]),
                 y: linearScaleY(first_row_data[first_row_counter][1]),
-                id: instruments[instrument]["id"]
+                id: instruments[instrument]["id"],
+                fill: instruments[instrument]["fill"]
               };
               data.push(curr_instrument);
               first_row_counter++;
@@ -188,7 +197,8 @@ function wind(id)
               var curr_instrument = {
                 x: linearScaleX(second_row_data[second_row_counter][0]),
                 y: linearScaleY(second_row_data[second_row_counter][1]),
-                id: instruments[instrument]["id"]
+                id: instruments[instrument]["id"],
+                fill: instruments[instrument]["fill"]
               };
               data.push(curr_instrument);
               second_row_counter++;
@@ -211,12 +221,17 @@ function wind(id)
                                         .call(dragged);
       first_row_group.append("circle")
                      .attr("r", radius)
-                     .attr("class", function(d) {return d.id;});
+                     .attr("class", function(d) {return d.id;})
+                     .style("fill", function(d) {return d.fill;})
+                     .on("mouseover", function() {d3.select(this).style("fill", "red")})
+                     .on("mouseout", function() {d3.select(this).style("fill", function(d) {return d.fill;})});
 
       first_row_group.append("text")
                      .text(function(d) {return d.id})
                      .attr("text-anchor", "middle")
                      .attr("dominant-baseline", "central")
+                     .attr("font-family", "\"Trebuchet MS\", Verada, sans-serif")
+                     .attr("font-size", "12px")
                      .classed("instrument_name", true);
 }
 
@@ -232,13 +247,12 @@ var dragged = d3.drag()
                     });
 
 
-$("#export_button").click(function () {
-  var graph = $("svg");
-  var serializer = new XMLSerializer();
-  var svg = graph[0];
-  var output;
-  output = serializer.serializeToString(svg);
-  console.log(output)
-
-  $.post("/export", {new_data: output})
+$("#export_button").click(function(){
+var svg = document.getElementsByTagName('svg')[0];
+var serializer = new XMLSerializer();
+var svg_string = serializer.serializeToString(svg);
+var form = $("#svg_form");
+$("#output_data").val(svg_string);
+form.submit();
+console.log($("#output_data").val(svg_string));
 });
