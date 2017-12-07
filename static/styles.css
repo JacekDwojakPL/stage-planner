@@ -6,7 +6,7 @@
 
 body {
     font-family: 'Poppins', sans-serif;
-    background: #fafafa;
+    background: #2C3E50;
 }
 
 p {
@@ -51,11 +51,42 @@ a, a:hover, a:focus {
 .wrapper {
     display: flex;
     align-items: stretch;
+    height: 900px;
+    background-color: #2C3E50;
+
+}
+
+#right {
+  max-width: 200px;
+  min-width: 200px;
+  right: 1080;
+}
+
+#top {
+  position: absolute;
+  top: 0;
+  left: 200px;
+  z-index: 999;
+  min-width: 1280px;
+  max-width: 1280px;
+  height: 70px;
+  margin-bottom: 5px;
+  padding-bottom: 5px;
+  background-color: #2C3E50;
+}
+
+#stage_view {
+  top: 70px;
+  width: auto;
+  height: 720px;
+  position: relative;
+
 }
 
 #sidebar {
     min-width: 200px;
     max-width: 200px;
+    height: 800px;
     background: #2C3E50;
     color: #fff;
     transition: all 0.3s;
@@ -72,7 +103,7 @@ a, a:hover, a:focus {
 
 #sidebar ul.components {
     padding: 20px 0;
-    border-bottom: 1px solid #1F2B38;
+
 }
 
 #sidebar ul p {
