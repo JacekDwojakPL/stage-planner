@@ -55,13 +55,18 @@ svgContainer.on("click", function() {
 var clickedNode = circleClickedGroup.data(data)
                                     .append("g")
                                     .attr("transform", function(d) {return "translate(" + [ d.x,d.y ] + ")"})
-                                    .call(dragged);
+                                    .call(dragged)
+                                    .on("click", function () {d3.event.stopPropagation()
+                                                              if ($("#new_name_field").val() != '') {
+                                                                d3.select(this).select('text').text($("#new_name_field").val());
+                                                              };
+                                                            });
 clickedNode.append("circle")
            .attr("r", radius)
            .style("fill", "red");
 
 clickedNode.append("text")
-           .text("test")
+           .text("instrument")
            .attr("text-anchor", "middle")
            .attr("dominant-baseline", "central")
            .attr("font-family", "\"Trebuchet MS\", Verada, sans-serif")
@@ -112,7 +117,14 @@ function createLayout(id)
                                   .attr("transform", function(d) {return "translate(" + d.x + "," + d.y + ")"})
                                   .classed(id, true)
                                   .call(dragged)
-                                  .on("click", function () {d3.event.stopPropagation()});
+                                  .on("click", function () {d3.event.stopPropagation()
+                                                            if ($("#new_name_field").val() != '') {
+                                                                d3.select(this).select('text').text($("#new_name_field").val());
+                                                              };
+                                                            });
+
+
+
 
        circle_group.append("circle")
                    .attr("r", radius)
@@ -218,7 +230,13 @@ function wind(id)
                                         .append("g")
                                         .attr("transform", function(d) {return "translate(" + d.x + "," + d.y + ")"})
                                         .classed("first_row", true)
-                                        .call(dragged);
+                                        .call(dragged)
+                                        .on("click", function () {d3.event.stopPropagation()
+                                                                  if ($("#new_name_field").val() != '') {
+                                                                    d3.select(this).select('text').text($("#new_name_field").val());
+                                                                  };
+
+                                                                  });
       first_row_group.append("circle")
                      .attr("r", radius)
                      .attr("class", function(d) {return d.id;})
@@ -245,6 +263,17 @@ var dragged = d3.drag()
                         return "translate(" + [ d.x, d.y ] + ")"
                       })
                     });
+
+
+//function change_name(text_node) {
+
+
+//   $("#old_name_field").val(text_node.text());
+//   $("#change_name_button").click(function(text_node) {
+//     text_node.text() = $("#new_name_field").val();
+//   })
+
+//}
 
 
 $("#export_button").click(function(){

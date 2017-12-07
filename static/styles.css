@@ -59,8 +59,9 @@ a, a:hover, a:focus {
 #right {
   max-width: 200px;
   min-width: 200px;
-  right: 1080;
+  right: 1080px;
 }
+
 
 #top {
   position: absolute;
@@ -126,6 +127,24 @@ a, a:hover, a:focus {
     background: #2C3E50;
 }
 
+#edit_field {
+  top: 130px;
+  padding-left: 20px;
+  padding-right: 20px;
+}
+
+small {
+  margin-left: 8px;
+  margin-right: 8px;
+}
+
+#export_button {
+  margin-left: 8px;
+  margin-right: 8px;
+  margin-top: 8px;
+  min-width: 140px;
+  max-width: 140px;
+}
 
 a[data-toggle="collapse"] {
     position: relative;
@@ -173,6 +192,16 @@ a.article, a.article:hover {
 }
 
 
+input[type=text] {
+  padding: 12px;
+  margin-left: 8px;
+  margin-right: 8px;
+  margin-top: 8px;
+  margin-bottom: 8px;
+  max-width: 140px;
+  min-width: 140px;
+  height: 40px;
+}
 
 /* ---------------------------------------------------
     CONTENT STYLE

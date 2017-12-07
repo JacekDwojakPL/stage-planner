@@ -1,8 +1,9 @@
+import HTMLParser
 from flask import Flask, request, jsonify, render_template, url_for, send_file
 from flask_jsglue import JSGlue
 import sqlite3
 import pdfkit
-import html
+
 from io import BytesIO
 
 app = Flask(__name__)
@@ -27,8 +28,18 @@ def instrument():
 def export_pdf():
     if request.method == 'POST':
         pdf_string = request.form["output_data"]
-        encoded = html.unescape(pdf_string)
-        options = {"orientation": "landscape"}
+        encoded = HTMLParser.HTMLParser().unescape(pdf_string)
+        options = {
+                    '--orientation': 'landscape',
+                    '--encoding': 'UTF-8',
+                    '--print-media-type': '',
+                    '--dpi': '300',
+                    '--margin-top': '5mm',
+                    '--margin-bottom': '5mm',
+                    '--margin-left': '5mm',
+                    '--margin-right': '5mm',
+                    '--zoom': '1.10'
+                    }
         pdf = pdfkit.from_string(pdf_string, False, options=options)
         pdf_out = BytesIO(pdf)
 

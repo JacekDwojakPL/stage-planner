@@ -45,9 +45,28 @@
     </ul>
   </nav>
 
-  <div id="top">Top content</div>
   <div id="stage_view"></div>
-  <div id="right">Right margin</div>
+  <nav id="sidebar">
+    <div class="sidebar-header">
+      <h3>Edit</h3>
+    </div>
+    <ul class="list-unstyled components">
+      <li><a href="#edit_name" data-toggle="collapse" aria-expanded="false">Edit Name</a></li>
+        <ul class="collapse list-unstyled" id="edit_name">
+          <li>
+            <div class="form-group">
+              <small id="change_name_help" class="form-text text-muted">Input new name and click on circle to change</small>
+              <input type="text" id="new_name_field" class="form-control" placeholder="New Name">
+          </li>
+        </ul>
+        <li><a href="#edit_color" data-toggle="collapse" aria-expanded="false">Edit Color</a></li>
+          <ul class="collapse list-unstyled" id="edit_color">
+            <li><input type="range"></li>
+            <li><input type="range"></li>
+            <li><input type="range"></li>
+          </ul>
+        </ul>
+    </nav>
 </div>
 
 <form id="svg_form" method="post" action="{{ url_for('export_pdf') }}">
