@@ -1,4 +1,5 @@
-import HTMLParser
+#!/usr/bin/python3
+import html
 from flask import Flask, request, jsonify, render_template, url_for, send_file
 from flask_jsglue import JSGlue
 import sqlite3
@@ -28,7 +29,7 @@ def instrument():
 def export_pdf():
     if request.method == 'POST':
         pdf_string = request.form["output_data"]
-        encoded = HTMLParser.HTMLParser().unescape(pdf_string)
+        encoded = html.unescape(pdf_string)
         options = {
                     '--orientation': 'landscape',
                     '--encoding': 'UTF-8',
