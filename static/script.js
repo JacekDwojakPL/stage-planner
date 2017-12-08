@@ -57,13 +57,12 @@ var clickedNode = circleClickedGroup.data(data)
                                     .attr("transform", function(d) {return "translate(" + [ d.x,d.y ] + ")"})
                                     .call(dragged)
                                     .on("click", function () {d3.event.stopPropagation()
-                                                              if ($("#new_name_field").val() != '') {
-                                                                d3.select(this).select('text').text($("#new_name_field").val());
-                                                              };
-                                                            });
+                                                              d3.select(this).classed("selected", d3.select(this).classed("selected") ? false : true); });
 clickedNode.append("circle")
            .attr("r", radius)
-           .style("fill", "red");
+           .style("fill", "red")
+           .on("mouseover", function() {d3.select(this).style("cursor", "pointer")})
+           .on("mouseout", function()  {d3.select(this).style("cursor", "default")});
 
 clickedNode.append("text")
            .text("instrument")
@@ -118,9 +117,7 @@ function createLayout(id)
                                   .classed(id, true)
                                   .call(dragged)
                                   .on("click", function () {d3.event.stopPropagation()
-                                                            if ($("#new_name_field").val() != '') {
-                                                                d3.select(this).select('text').text($("#new_name_field").val());
-                                                              };
+                                                            d3.select(this).classed("selected", d3.select(this).classed("selected") ? false : true);
                                                             });
 
 
@@ -130,8 +127,10 @@ function createLayout(id)
                    .attr("r", radius)
                    .attr("class", id+"_circle")
                    .style("fill", function(d) {return d.fill; })
-                   .on("mouseover", function() {d3.select(this).style("fill", "red")})
-                   .on("mouseout", function() {d3.select(this).style("fill", function(d) {return d.fill;})});;
+                   .on("mouseover", function() {d3.select(this).style("fill", "red")
+                                                d3.select(this).style("cursor", "pointer")})
+                   .on("mouseout", function()  {d3.select(this).style("fill", function(d) {return d.fill;})
+                                                d3.select(this).style("cursor", "default")});
 
        circle_group.append("text")
                    .text(id)
@@ -232,17 +231,15 @@ function wind(id)
                                         .classed("first_row", true)
                                         .call(dragged)
                                         .on("click", function () {d3.event.stopPropagation()
-                                                                  if ($("#new_name_field").val() != '') {
-                                                                    d3.select(this).select('text').text($("#new_name_field").val());
-                                                                  };
-
-                                                                  });
+                                                                  d3.select(this).classed("selected", d3.select(this).classed("selected") ? false : true); });
       first_row_group.append("circle")
                      .attr("r", radius)
                      .attr("class", function(d) {return d.id;})
                      .style("fill", function(d) {return d.fill;})
-                     .on("mouseover", function() {d3.select(this).style("fill", "red")})
-                     .on("mouseout", function() {d3.select(this).style("fill", function(d) {return d.fill;})});
+                     .on("mouseover", function() {d3.select(this).style("fill", "red")
+                                                  d3.select(this).style("cursor", "pointer")})
+                     .on("mouseout", function() {d3.select(this).style("fill", function(d) {return d.fill;})
+                                                 d3.select(this).style("cursor", "default")});
 
       first_row_group.append("text")
                      .text(function(d) {return d.id})
@@ -265,15 +262,12 @@ var dragged = d3.drag()
                     });
 
 
-//function change_name(text_node) {
-
-
-//   $("#old_name_field").val(text_node.text());
-//   $("#change_name_button").click(function(text_node) {
-//     text_node.text() = $("#new_name_field").val();
-//   })
-
-//}
+$("#change_name_button").click(function () {
+  if($("#new_name_field").val() != ""){
+    svgContainer.selectAll(".selected").select('text').text($("#new_name_field").val());
+    svgContainer.selectAll(".selected").classed("selected", false);
+  };
+});
 
 
 $("#export_button").click(function(){

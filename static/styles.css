@@ -138,7 +138,7 @@ small {
   margin-right: 8px;
 }
 
-#export_button {
+button {
   margin-left: 8px;
   margin-right: 8px;
   margin-top: 8px;
@@ -227,23 +227,12 @@ input[type=text] {
     }
 }
 
-
-.active {
-  stroke: #000;
-  stroke-width: 2px;
-}
-
-.flagged {
-  fill: red;
-  stroke: #000;
-  stroke-width: 1px;
-}
-
 .svg_background {
   background-color: rgb(254, 254, 254);
 }
 
-circle:hover {
-  fill: red;
-  cursor: pointer;
+.selected {
+  stroke: #000;
+  stroke-width: 1px;
+  fill: orange;
 }
