@@ -44,4 +44,4 @@ def export_pdf():
         pdf = pdfkit.from_string(pdf_string, False, options=options)
         pdf_out = BytesIO(pdf)
 
-        return send_file(pdf_out, "output.pdf")
+        return send_file(pdf_out, attachment_filename="output.pdf", mimetype="application/pdf")

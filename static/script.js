@@ -13,6 +13,7 @@ $.getJSON(Flask.url_for("instrument"), second_row_parameters)
                });
 
 var radius = 18;
+var hover_radius = 21;
 var width = 1280;
 var height = 720;
 
@@ -60,8 +61,10 @@ var clickedNode = circleClickedGroup.data(data)
 clickedNode.append("circle")
            .attr("r", radius)
            .style("fill", "red")
-           .on("mouseover", function() {d3.select(this).style("cursor", "pointer")})
-           .on("mouseout", function()  {d3.select(this).style("cursor", "default")});
+           .on("mouseover", function() {d3.select(this).attr("r", hover_radius);
+                                        d3.select(this).style("cursor", "pointer")})
+           .on("mouseout", function()  {d3.select(this).attr("r", radius);
+                                        d3.select(this).style("cursor", "default")});
 
 clickedNode.append("text")
            .text("instrument")
@@ -126,10 +129,10 @@ function createLayout(id)
                    .attr("r", radius)
                    .attr("class", id+"_circle")
                    .style("fill", function(d) {return d.fill; })
-                   .on("mouseover", function() {d3.select(this).style("fill", "red")
+                   .on("mouseover", function() {d3.select(this).attr("r", hover_radius);
                                                 d3.select(this).style("cursor", "pointer")})
-                   .on("mouseout", function()  {d3.select(this).style("fill", function(d) {return d.fill;})
-                                                d3.select(this).style("cursor", "default")});
+                   .on("mouseout", function()  {d3.select(this).attr("r", radius);
+                                                d3.select(this).style("cursor", "default");});
 
        circle_group.append("text")
                    .text(id)
@@ -235,9 +238,9 @@ function wind(id)
                      .attr("r", radius)
                      .attr("class", function(d) {return d.id;})
                      .style("fill", function(d) {return d.fill;})
-                     .on("mouseover", function() {d3.select(this).style("fill", "red")
+                     .on("mouseover", function() {d3.select(this).attr("r", hover_radius)
                                                   d3.select(this).style("cursor", "pointer")})
-                     .on("mouseout", function() {d3.select(this).style("fill", function(d) {return d.fill;})
+                     .on("mouseout", function() {d3.select(this).attr("r", radius);
                                                  d3.select(this).style("cursor", "default")});
 
       first_row_group.append("text")
@@ -275,6 +278,10 @@ $("#change_color_button").click(function () {
     svgContainer.selectAll(".selected").select('circle').style('fill', output_color);
     svgContainer.selectAll(".selected").classed("selected", false);
 });
+
+$("#remove_button").click(function () {
+  svgContainer.selectAll(".selected").remove();
+})
 
 
 $("#export_button").click(function(){

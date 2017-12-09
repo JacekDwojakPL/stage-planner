@@ -51,7 +51,7 @@
       <h3>Edit</h3>
     </div>
     <ul class="list-unstyled components">
-      <li><a href="#edit_name" data-toggle="collapse" aria-expanded="false">Edit Name</a></li>
+      <li><a href="#edit_name" data-toggle="collapse" aria-expanded="false">Change name</a></li>
         <ul class="collapse list-unstyled" id="edit_name">
           <li>
             <div class="form-group">
@@ -61,7 +61,7 @@
           </li>
           <li><button class="btn btn-default" type="button" id="change_name_button">Apply</button></li>
         </ul>
-        <li><a href="#edit_color" data-toggle="collapse" aria-expanded="false">Edit Color</a></li>
+        <li><a href="#edit_color" data-toggle="collapse" aria-expanded="false">Change color</a></li>
           <ul class="collapse list-unstyled" id="edit_color">
             <li>
               <div class="form-group">
@@ -71,6 +71,15 @@
             </li>
             <li><button class="btn btn-default" type="button" id="change_color_button">Apply</button></li>
           </ul>
+          <li><a href="#remove_instrument" data-toggle="collapse" aria-expanded="false">Remove</a></li>
+            <ul class="collapse list-unstyled" id="remove_instrument">
+              <li>
+                <div class="form-group">
+                  <small id="change_color_help" class="form-text text-muted">Select instruments and click remove</small>
+                </div>
+              </li>
+              <li><button class="btn btn-default" id="remove_button">Remove</button></li>
+            </ul>
         </ul>
     </nav>
 
