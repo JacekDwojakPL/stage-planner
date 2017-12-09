@@ -6,7 +6,6 @@ var second_row_data = [];
 $.getJSON(Flask.url_for("instrument"), first_row_parameters)
  .done(function(data, textStatus, jqXHR) {
                 first_row_data = data
-                console.log(textStatus)
                 });
 $.getJSON(Flask.url_for("instrument"), second_row_parameters)
 .done(function(data, textStatus, jqXHR) {
@@ -269,6 +268,14 @@ $("#change_name_button").click(function () {
   };
 });
 
+$("#change_color_button").click(function () {
+    var new_color = document.getElementsByClassName('jscolor');
+    output_color = "#" + new_color[0].jscolor;
+
+    svgContainer.selectAll(".selected").select('circle').style('fill', output_color);
+    svgContainer.selectAll(".selected").classed("selected", false);
+});
+
 
 $("#export_button").click(function(){
 var svg = document.getElementsByTagName('svg')[0];
@@ -277,5 +284,4 @@ var svg_string = serializer.serializeToString(svg);
 var form = $("#svg_form");
 $("#output_data").val(svg_string);
 form.submit();
-console.log($("#output_data").val(svg_string));
 });

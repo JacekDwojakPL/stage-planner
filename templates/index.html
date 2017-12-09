@@ -58,14 +58,18 @@
               <small id="change_name_help" class="form-text text-muted">Select instruments, insert new name and click apply</small>
               <input type="text" id="new_name_field" class="form-control" placeholder="New Name">
             </div>
-          <li><button class="btn btn-default" type="button" id="change_name_button">Apply</button></li>
           </li>
+          <li><button class="btn btn-default" type="button" id="change_name_button">Apply</button></li>
         </ul>
         <li><a href="#edit_color" data-toggle="collapse" aria-expanded="false">Edit Color</a></li>
           <ul class="collapse list-unstyled" id="edit_color">
-            <li><input type="range"></li>
-            <li><input type="range"></li>
-            <li><input type="range"></li>
+            <li>
+              <div class="form-group">
+                <small id="change_color_help" class="form-text text-muted">Select instruments, choose new color and click apply</small>
+                <button class="jscolor {valueElement: null, value: 'FBBA42'}" id="color_chooser">
+              </div>
+            </li>
+            <li><button class="btn btn-default" type="button" id="change_color_button">Apply</button></li>
           </ul>
         </ul>
     </nav>
@@ -79,6 +83,7 @@
 <script src="{{ url_for('static', filename='bootstrap.min.js') }}" type="text/javascript"></script>
 <script src="{{ url_for('static', filename='d3.min.js') }}" type="text/javascript"></script>
 {{ JSGlue.include() }}
+<script src="{{ url_for('static', filename='jscolor.min.js') }}" type="text/javascript"></script>
 <script src="{{url_for('static', filename='script.js') }}" type="text/javascript"></script>
 </body>
 </html>
