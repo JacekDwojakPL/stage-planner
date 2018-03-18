@@ -58,7 +58,7 @@ svgContainer.on("click", function() {
   click_data.push(new_data);
 
 // creating new circle on click
-var clicked_node = circle_clicked_group.data(data)
+var clicked_node = circle_clicked_group.data(click_data)
                                     .append("g")
                                     .attr("transform", function(d) {return "translate(" + [ d.x,d.y ] + ")"})
                                     .call(dragged)
