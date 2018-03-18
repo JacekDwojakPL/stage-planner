@@ -21,6 +21,7 @@
     <ul class="list-unstyled components">
       <li><a href="#string_submenu" data-toggle="collapse" aria-expanded="false">Strings</a></li>
         <ul class="collapse list-unstyled" id="string_submenu">
+        <small id="strings_help" class="form-text text-muted">Enter number of string instruments</small>
           <li><input type="text" id="vn1" class="form-control" placeholder="VN I" onkeyup="createLayout(this.id)"></li>
           <li><input type="text" id="vn2" class="form-control" placeholder="VN II" onkeyup="createLayout(this.id)"></li>
           <li><input type="text" id="vla" class="form-control" placeholder="VLA" onkeyup="createLayout(this.id)"></li>
@@ -29,6 +30,7 @@
         </ul>
         <li><a href="#wood_submenu" data-toggle="collapse" aria-expanded="false">Wood</a></li>
           <ul class="collapse list-unstyled" id="wood_submenu">
+            <small id="wood_help" class="form-text text-muted">Enter number of wood instruments</small>
             <li><input type="text" class="form-control" id="fl" placeholder="FL" onkeyup="wind(this.id)"></li>
             <li><input type="text" class="form-control" id="cl" placeholder="CL" onkeyup="wind(this.id)"></li>
             <li><input type="text" class="form-control" id="ob" placeholder="OB" onkeyup="wind(this.id)"></li>
@@ -36,6 +38,7 @@
           </ul>
           <li><a href="#brass_submenu" data-toggle="collapse" aria-expanded="false">Brass</a></li>
             <ul class="collapse list-unstyled" id="brass_submenu">
+              <small id="brass_help" class="form-text text-muted">Enter number of brass instruments</small>
               <input type="text" class="form-control" id="cr" placeholder="CR" onkeyup="wind(this.id)">
               <input type="text" class="form-control" id="tr" placeholder="TR" onkeyup="wind(this.id)">
               <input type="text" class="form-control" id="tbn" placeholder="TBN" onkeyup="wind(this.id)">

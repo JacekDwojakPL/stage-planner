@@ -1,3 +1,5 @@
+//configuration for getting position for wind instruments
+
 var first_row_parameters = {name: "first_row"};
 var first_row_data = [];
 var second_row_parameters = {name: "second_row"};
@@ -12,6 +14,8 @@ $.getJSON(Flask.url_for("instrument"), second_row_parameters)
                second_row_data = data
                });
 
+
+// general confugiration of D3, radius of circles, stage dimensions
 var radius = 18;
 var hover_radius = 21;
 var width = 1280;
@@ -24,7 +28,7 @@ var svgContainer = d3.select("#stage_view")
                              .attr("class", "svg_background");
 
 
-
+// mapping window width and height to 0-100 range for easier placment of circles
 var linearScaleX = d3.scaleLinear()
                           .domain([0, 100])
                           .range([0, width]);
@@ -37,28 +41,32 @@ var y_axis = d3.axisRight().scale(linearScaleY);
 svgContainer.append("g").call(x_axis);
 svgContainer.append("g").call(y_axis);
 
-var circleClickedGroup = svgContainer.append("g")
+
+// creatig
+var circle_clicked_group = svgContainer.append("g")
                                      .classed("clicked", true);
 
-// container for getting x and y coordinates of click event
-var data = [];
+// container for storing x and y coordinates of click event
+var click_data = [];
+
 svgContainer.on("click", function() {
   var coords = d3.mouse(this);
-  var newData = {
+  var new_data = {
     x: coords[0],
     y: coords[1]
   };
-  data.push(newData);
+  click_data.push(new_data);
 
 // creating new circle on click
-
-var clickedNode = circleClickedGroup.data(data)
+var clicked_node = circle_clicked_group.data(data)
                                     .append("g")
                                     .attr("transform", function(d) {return "translate(" + [ d.x,d.y ] + ")"})
                                     .call(dragged)
                                     .on("click", function () {d3.event.stopPropagation()
                                                               d3.select(this).classed("selected", d3.select(this).classed("selected") ? false : true); });
-clickedNode.append("circle")
+
+// styling clicked circle, definig hover event
+clicked_node.append("circle")
            .attr("r", radius)
            .style("fill", "red")
            .on("mouseover", function() {d3.select(this).attr("r", hover_radius);
@@ -66,7 +74,8 @@ clickedNode.append("circle")
            .on("mouseout", function()  {d3.select(this).attr("r", radius);
                                         d3.select(this).style("cursor", "default")});
 
-clickedNode.append("text")
+// adding default text label on circle
+clicked_node.append("text")
            .text("instrument")
            .attr("text-anchor", "middle")
            .attr("dominant-baseline", "central")
@@ -74,19 +83,21 @@ clickedNode.append("text")
            .attr("font-size", "12px")
            .classed("instrument_name", true);
 
-data.length = 0;
+// reset array for circles created by click
+click_data.length = 0;
 
 })
 
-// example data for fake first violin position
-
+// create stage layout with input data, called each time user types something in text inputs
 function createLayout(id)
 {
     var instrument_global = [];
+    // parameters for ajax request
     var parameters = {
       name: id
     };
 
+// ajax request to get data from sever
   $.getJSON(Flask.url_for("instrument"), parameters)
    .done(function(data, textStatus, jqHXR)
    {
@@ -99,6 +110,7 @@ function createLayout(id)
 
      if (user_input <= instrument_global.length)  {
 
+       // scaling x and y coordinates
        for(var i = 0; i < user_input; i++)
        {
          var newData = {
@@ -109,8 +121,10 @@ function createLayout(id)
          curr_data.push(newData);
        }
 
+       //clear the viewport from existing circles, for update
        svgContainer.selectAll("g." + id).remove();
 
+       // create group for new circles
        circle_group = svgContainer.selectAll("g."+id)
                                   .data(curr_data)
                                   .enter()
@@ -121,10 +135,7 @@ function createLayout(id)
                                   .on("click", function () {d3.event.stopPropagation()
                                                             d3.select(this).classed("selected", d3.select(this).classed("selected") ? false : true);
                                                             });
-
-
-
-
+      // style of each circle
        circle_group.append("circle")
                    .attr("r", radius)
                    .attr("class", id+"_circle")
@@ -134,6 +145,7 @@ function createLayout(id)
                    .on("mouseout", function()  {d3.select(this).attr("r", radius);
                                                 d3.select(this).style("cursor", "default");});
 
+      // text label for each circle
        circle_group.append("text")
                    .text(id)
                    .classed("instrument_name", true)
@@ -175,7 +187,6 @@ function wind(id)
       cr.ilosc -= 2;
       cr_second.ilosc =  cr.ilosc;
     }
-
 
     var data = [];
     var first_row_counter = 0;
