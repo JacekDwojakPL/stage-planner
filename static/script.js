@@ -1,3 +1,6 @@
+/* Stage Planner Script copyright 2018 by Jacek Dwojak */
+
+
 //configuration for getting position for wind instruments
 
 var first_row_parameters = {name: "first_row"};
@@ -38,8 +41,8 @@ var linearScaleY = d3.scaleLinear()
 
 var x_axis = d3.axisBottom().scale(linearScaleX);
 var y_axis = d3.axisRight().scale(linearScaleY);
-svgContainer.append("g").call(x_axis);
-svgContainer.append("g").call(y_axis);
+//svgContainer.append("g").call(x_axis);
+//svgContainer.append("g").call(y_axis);
 
 
 // creatig
